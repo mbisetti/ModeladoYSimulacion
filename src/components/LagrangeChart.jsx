@@ -166,6 +166,14 @@ export default function LagrangeChart({ result, params }) {
         </div>
       )}
 
+      {/* Polynomial expression */}
+      {result?.polynomial && (
+        <div className="poly-row">
+          <span className="poly-label">L(x) =</span>
+          <span className="poly-expr">{result.polynomial}</span>
+        </div>
+      )}
+
       <style>{`
         .chart-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
         .chart-header { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
@@ -177,6 +185,9 @@ export default function LagrangeChart({ result, params }) {
         .nodes-row { padding: 0.5rem 1.25rem 0.65rem; display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; border-top: 1px solid var(--border); }
         .nodes-label { font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-right: 0.2rem; }
         .node-chip { font-family: var(--font-mono); font-size: 0.7rem; background: rgba(255,215,64,0.1); border: 1px solid rgba(255,215,64,0.25); color: #ffd740; border-radius: 4px; padding: 0.1rem 0.4rem; }
+        .poly-row { padding: 0.55rem 1.25rem 0.7rem; border-top: 1px solid var(--border); display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+        .poly-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+        .poly-expr { font-family: var(--font-mono); font-size: 0.78rem; color: #ea80fc; line-height: 1.6; word-break: break-all; }
       `}</style>
     </div>
   )

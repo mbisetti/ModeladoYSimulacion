@@ -215,6 +215,21 @@ export default function NewtonCotesChart({ fnExpr, result, params, methodId }) {
         </ResponsiveContainer>
       )}
 
+      {result?.truncFormula && (
+        <div className="trunc-row">
+          <span className="trunc-label">Error de truncamiento</span>
+          <span className="trunc-formula">{result.truncFormula}</span>
+          <span className="trunc-sep">·</span>
+          <span className="trunc-detail">
+            max|f{result.truncDerivOrder === 2 ? '\'\'': '⁴'}| ≈ {fmt(result.truncMaxDeriv, 6)}
+          </span>
+          <span className="trunc-sep">→</span>
+          <span className="trunc-bound" style={{ '--c': color }}>
+            |E_T| ≲ {fmt(result.truncBound, 8)}
+          </span>
+        </div>
+      )}
+
       <style>{`
         .chart-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
         .chart-header { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
@@ -224,6 +239,12 @@ export default function NewtonCotesChart({ fnExpr, result, params, methodId }) {
         .badge-n { font-family: var(--font-mono); font-size: 0.7rem; padding: 0.15rem 0.55rem; border-radius: 99px; border: 1px solid var(--border); color: var(--text-muted); }
         .root-badge { font-family: var(--font-mono); font-size: 0.72rem; background: color-mix(in srgb, var(--c, #69f0ae) 12%, transparent); border: 1px solid color-mix(in srgb, var(--c, #69f0ae) 35%, transparent); color: var(--c, #69f0ae); border-radius: 99px; padding: 0.15rem 0.6rem; }
         .chart-empty { height: 320px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.85rem; font-style: italic; }
+        .trunc-row { padding: 0.55rem 1.25rem 0.7rem; border-top: 1px solid var(--border); display: flex; align-items: baseline; gap: 0.45rem; flex-wrap: wrap; }
+        .trunc-label { font-size: 0.66rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; margin-right: 0.2rem; }
+        .trunc-formula { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-secondary); }
+        .trunc-sep { color: var(--text-muted); font-size: 0.72rem; }
+        .trunc-detail { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-secondary); }
+        .trunc-bound { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--c, #69f0ae); }
       `}</style>
     </div>
   )

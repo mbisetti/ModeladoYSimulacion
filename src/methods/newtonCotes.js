@@ -1,4 +1,4 @@
-import { fmt } from '../utils/mathUtils'
+import { fmt, safeEval } from '../utils/mathUtils'
 
 /**
  * Newton-Cotes Integration Rules
@@ -35,7 +35,7 @@ export function newtonCotes(_fn, _dfn, params) {
     // ∫f(x)dx ≈ h * Σ f((x_{i-1}+x_i)/2)
     for (let i = 1; i <= n; i++) {
       const xMid = a + (i - 0.5) * h
-      const fMid = _fn(xMid)
+      const fMid = safeEval(_fn, xMid)
       const contrib = h * fMid
       integral += contrib
       iterations.push({
@@ -51,7 +51,7 @@ export function newtonCotes(_fn, _dfn, params) {
   } else if (rule === 'trapezoid') {
     // ∫f(x)dx ≈ h/2 * (f(a) + 2Σf(x_i) + f(b))
     const xs = Array.from({ length: n + 1 }, (_, i) => a + i * h)
-    const fs = xs.map(x => _fn(x))
+    const fs = xs.map(x => safeEval(_fn, x))
 
     for (let i = 0; i < n; i++) {
       const contrib = (h / 2) * (fs[i] + fs[i + 1])
@@ -71,7 +71,7 @@ export function newtonCotes(_fn, _dfn, params) {
   } else if (rule === 'simpson13') {
     // ∫f(x)dx ≈ h/3 * (f(x_0) + 4f(x_1) + 2f(x_2) + 4f(x_3) + ... + f(x_n))
     const xs = Array.from({ length: n + 1 }, (_, i) => a + i * h)
-    const fs = xs.map(x => _fn(x))
+    const fs = xs.map(x => safeEval(_fn, x))
     let groupIntegral = 0
 
     for (let i = 0; i < n; i += 2) {
@@ -95,7 +95,7 @@ export function newtonCotes(_fn, _dfn, params) {
   } else if (rule === 'simpson38') {
     // ∫f(x)dx ≈ 3h/8 * (f(x_0) + 3f(x_1) + 3f(x_2) + 2f(x_3) + ... + f(x_n))
     const xs = Array.from({ length: n + 1 }, (_, i) => a + i * h)
-    const fs = xs.map(x => _fn(x))
+    const fs = xs.map(x => safeEval(_fn, x))
     let groupIntegral = 0
 
     for (let i = 0; i < n; i += 3) {

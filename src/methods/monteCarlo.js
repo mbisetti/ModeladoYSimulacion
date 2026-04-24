@@ -1,4 +1,4 @@
-import { fmt } from '../utils/mathUtils'
+import { fmt, safeEval } from '../utils/mathUtils'
 
 /**
  * Monte Carlo Integration
@@ -36,9 +36,7 @@ export function monteCarlo(_fn, _dfn, params) {
 
   for (let i = 1; i <= N; i++) {
     const xi = a + rand() * (b - a)
-    let fxi
-    try { fxi = _fn(xi) } catch { fxi = 0 }
-    if (!isFinite(fxi)) fxi = 0
+    const fxi = safeEval(_fn, xi)
 
     sum += fxi
     sumSq += fxi * fxi
